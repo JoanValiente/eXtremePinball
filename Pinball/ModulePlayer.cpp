@@ -105,7 +105,7 @@ bool ModulePlayer::Start()
 	LFlipperLeftFlipper = (b2RevoluteJoint*)App->physics->world->CreateJoint(&LeftJointDef);
 
 	// RIGHT FLIPPER
-//	RFlipperRightFlipper = (b2RevoluteJoint*)App->physics->world->CreateJoint(&RightJointDef);
+	RFlipperRightFlipper = (b2RevoluteJoint*)App->physics->world->CreateJoint(&RightJointDef);
 
 	LOG("Loading player");
 	return true;
