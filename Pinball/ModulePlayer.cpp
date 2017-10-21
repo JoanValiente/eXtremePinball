@@ -56,7 +56,7 @@ bool ModulePlayer::Start()
 
 	// --------------------------------------------LEFT FLIPPER------------------------------------------
 
-	LeftFlipperjoint = App->physics->CreateCircle(30, 30, 6, b2_staticBody);
+	LeftFlipperjoint = App->physics->CreateCircle(480, 600, 6, b2_staticBody);
 
 	b2RevoluteJointDef LeftJointDef;
 	LeftJointDef.bodyA = LeftFlipper->body;
@@ -75,10 +75,11 @@ bool ModulePlayer::Start()
 
 	// --------------------------------------------RIGHT FLIPPER------------------------------------------
 
-	RightFlipperjoint = App->physics->CreateCircle(30, 30, 6, b2_staticBody);
+	RightFlipperjoint = App->physics->CreateCircle(540, 600, 6, b2_staticBody);
 
+	
 	b2RevoluteJointDef RightJointDef;
-	RightJointDef.bodyA = LeftFlipper->body;
+	RightJointDef.bodyA = RightFlipper->body;
 	RightJointDef.bodyB = RightFlipperjoint->body;
 	RightJointDef.collideConnected = false;
 
@@ -104,7 +105,7 @@ bool ModulePlayer::Start()
 	LFlipperLeftFlipper = (b2RevoluteJoint*)App->physics->world->CreateJoint(&LeftJointDef);
 
 	// RIGHT FLIPPER
-	RFlipperRightFlipper = (b2RevoluteJoint*)App->physics->world->CreateJoint(&RightJointDef);
+//	RFlipperRightFlipper = (b2RevoluteJoint*)App->physics->world->CreateJoint(&RightJointDef);
 
 	LOG("Loading player");
 	return true;
@@ -121,7 +122,7 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		LFlipperLeftFlipper->GetBodyA()->ApplyAngularImpulse(-0.1f, true);
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 		RFlipperRightFlipper->GetBodyA()->ApplyAngularImpulse(-0.1f, true);
