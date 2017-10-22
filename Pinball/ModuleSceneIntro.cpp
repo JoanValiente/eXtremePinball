@@ -9,7 +9,7 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	circle = NULL;
+
 	ray_on = false;
 	sensed = false;
 }
@@ -25,10 +25,8 @@ bool ModuleSceneIntro::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	circle = App->textures->Load("pinball/wheel.png"); 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
-	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 
 	int map_shape[82] = {
@@ -75,11 +73,12 @@ bool ModuleSceneIntro::Start()
 		299, -89
 	};
 
-	PhysBody* map;
+	
 	map = App->physics->CreateChain(350, 650, map_shape, 82);
 	map->body->SetType(b2_staticBody);
 	map->body->GetFixtureList()->SetDensity(0.1f);
 
+	
 	
 	PhysBody* bouncers[3];
 
@@ -92,6 +91,19 @@ bool ModuleSceneIntro::Start()
 	}
 
 
+	boxes[0] = App->physics->CreateRectangle(370, 190, 15, 15);
+	boxes[1] = App->physics->CreateRectangle(375, 210, 15, 15);
+	boxes[2] = App->physics->CreateRectangle(380, 230, 15, 15);
+	boxes[3] = App->physics->CreateRectangle(620, 300, 15, 15);
+	boxes[4] = App->physics->CreateRectangle(625, 325, 15, 15);
+	boxes[5] = App->physics->CreateRectangle(625, 350, 15, 15);
+	boxes[6] = App->physics->CreateRectangle(620, 375, 15, 15);
+
+
+	for (int i = 0; i < 7; i++) {
+		boxes[i]->body->SetType(b2_staticBody);
+		boxes[i]->body->GetFixtureList()->SetRestitution(0.3f);
+	}
 
 	return ret;
 }
@@ -115,6 +127,7 @@ update_status ModuleSceneIntro::Update()
 	}
 	
 	
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -122,18 +135,13 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 
-	App->audio->PlayFx(bonus_fx);
 
-	/*
-	if(bodyA)
-	{
-		bodyA->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
+	
+	for (int i = 0; i < 7; i++) {
+		if (bodyB == boxes[i]) {
+			
+		}
 	}
 
-	if(bodyB)
-	{
-		bodyB->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}*/
+	
 }
