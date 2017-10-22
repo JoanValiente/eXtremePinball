@@ -1,4 +1,5 @@
-﻿  ModulePlayer.cpp
-c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\include\limits(211): warning C4577: si se usa 'noexcept' sin ningún modo de control de excepciones especificado, la finalización de la excepción no está garantizada. Especifique /EHsc
-  SDL Game.vcxproj -> C:\Users\joanv\Documents\GitHub\eXtremePinball\Pinball\Debug\2D Physics - class 4.exe
-  SDL Game.vcxproj -> C:\Users\joanv\Documents\GitHub\eXtremePinball\Pinball\Debug\2D Physics - class 4.pdb (Partial PDB)
+﻿  ModuleSceneIntro.cpp
+c:\users\usuario\documents\github\extremepinball\pinball\modulesceneintro.cpp(124): warning C4101: 'y': variable local sin referencia
+c:\users\usuario\documents\github\extremepinball\pinball\modulesceneintro.cpp(124): warning C4101: 'x': variable local sin referencia
+e:\visualstudio\vc\tools\msvc\14.11.25503\include\limits(211): warning C4577: si se usa 'noexcept' sin ningún modo de control de excepciones especificado, la finalización de la excepción no está garantizada. Especifique /EHsc
+  SDL Game.vcxproj -> C:\Users\Usuario\Documents\GitHub\eXtremePinball\Pinball\Debug\2D Physics - class 4.exe
