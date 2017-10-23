@@ -29,6 +29,7 @@ bool ModuleSceneIntro::Start()
 
 
 
+
 	int map_shape[82] = {
 		312, -88,
 		314, -450,
@@ -73,7 +74,25 @@ bool ModuleSceneIntro::Start()
 		299, -89
 	};
 
+	// -------------------------------------------Spring-------------------------------------------------------
 	
+	spring = App->physics->CreateRectangle(656, 527, 11, 6, b2_dynamicBody);
+	springSurface = App->physics->CreateRectangle(656, 555, 11, 6, b2_staticBody);
+
+	b2PrismaticJointDef springJoint;
+	springJoint.collideConnected = true;
+	springJoint.bodyA = spring->body;
+	springJoint.bodyB = springSurface->body;
+
+	springJoint.localAnchorA.Set(0, 0);
+	springJoint.localAnchorB.Set(0, -1);
+	springJoint.localAxisA.Set(0, -1);
+	springJoint.enableLimit = true;
+	springJoint.lowerTranslation = -0.02;
+	springJoint.upperTranslation = 1;
+	(b2PrismaticJoint*)App->physics->world->CreateJoint(&springJoint);
+
+	//--------------------------------------------------------------------------------------------------------
 	map = App->physics->CreateChain(350, 650, map_shape, 82);
 	map->body->SetType(b2_staticBody);
 	map->body->GetFixtureList()->SetDensity(0.1f);
@@ -91,13 +110,13 @@ bool ModuleSceneIntro::Start()
 	}
 
 
-	boxes[0] = App->physics->CreateRectangle(370, 190, 15, 15);
-	boxes[1] = App->physics->CreateRectangle(375, 210, 15, 15);
-	boxes[2] = App->physics->CreateRectangle(380, 230, 15, 15);
-	boxes[3] = App->physics->CreateRectangle(620, 300, 15, 15);
-	boxes[4] = App->physics->CreateRectangle(625, 325, 15, 15);
-	boxes[5] = App->physics->CreateRectangle(625, 350, 15, 15);
-	boxes[6] = App->physics->CreateRectangle(620, 375, 15, 15);
+	boxes[0] = App->physics->CreateRectangle(370, 190, 15, 15, b2_staticBody);
+	boxes[1] = App->physics->CreateRectangle(375, 210, 15, 15, b2_staticBody);
+	boxes[2] = App->physics->CreateRectangle(380, 230, 15, 15, b2_staticBody);
+	boxes[3] = App->physics->CreateRectangle(620, 300, 15, 15, b2_staticBody);
+	boxes[4] = App->physics->CreateRectangle(625, 325, 15, 15, b2_staticBody);
+	boxes[5] = App->physics->CreateRectangle(625, 350, 15, 15, b2_staticBody);
+	boxes[6] = App->physics->CreateRectangle(620, 375, 15, 15, b2_staticBody);
 
 
 	for (int i = 0; i < 7; i++) {
@@ -126,7 +145,15 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->listener = this;
 	}
 	
-	
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		spring->body->ApplyForce(b2Vec2(0, 22), b2Vec2(0, 0), true);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	{
+		spring->body->ApplyForce(b2Vec2(0, -1000), b2Vec2(0, 0), true);
+	}
 	
 	return UPDATE_CONTINUE;
 }
