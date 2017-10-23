@@ -77,7 +77,8 @@ bool ModuleSceneIntro::Start()
 	// -------------------------------------------Spring-------------------------------------------------------
 	
 	spring = App->physics->CreateRectangle(656, 527, 11, 6, b2_dynamicBody);
-	springSurface = App->physics->CreateRectangle(656, 555, 11, 6, b2_staticBody);
+	springSurface = App->physics->CreateRectangle(656, 555, 11, 10, b2_staticBody);
+
 
 	b2PrismaticJointDef springJoint;
 	springJoint.collideConnected = true;
@@ -101,9 +102,9 @@ bool ModuleSceneIntro::Start()
 	
 	PhysBody* bouncers[3];
 
-	bouncers[0] = App->physics->CreateCircle(520, 220, 17, b2_staticBody);
-	bouncers[1] = App->physics->CreateCircle(550, 270, 17, b2_staticBody);
-	bouncers[2] = App->physics->CreateCircle(490, 270, 17, b2_staticBody);
+	bouncers[0] = App->physics->CreateCircle(520, 220, 17, b2_staticBody,1.0f);
+	bouncers[1] = App->physics->CreateCircle(550, 270, 17, b2_staticBody,1.0f);
+	bouncers[2] = App->physics->CreateCircle(490, 270, 17, b2_staticBody,1.0f);
 
 	for (int i = 0; i < 3; i++) {
 		bouncers[i]->body->GetFixtureList()->SetRestitution(1.5f);
@@ -141,13 +142,13 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 6, b2_dynamicBody));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 6, b2_dynamicBody, 2.0f));
 		circles.getLast()->data->listener = this;
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		spring->body->ApplyForce(b2Vec2(0, 22), b2Vec2(0, 0), true);
+		spring->body->ApplyForce(b2Vec2(0, 10), b2Vec2(0, 0), true);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
