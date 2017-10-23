@@ -59,7 +59,7 @@ bool ModulePlayer::Start()
 
 	// --------------------------------------------LEFT FLIPPER------------------------------------------
 
-	LeftFlipperjoint = App->physics->CreateCircle(480, 600, 6, b2_staticBody, 1.0f);
+	LeftFlipperjoint = App->physics->CreateCircle(104, 519, 6, b2_staticBody, 1.0f);
 
 	b2RevoluteJointDef LeftJointDef;
 	LeftJointDef.bodyA = LeftFlipper->body;
@@ -78,7 +78,7 @@ bool ModulePlayer::Start()
 
 	// --------------------------------------------RIGHT FLIPPER------------------------------------------
 
-	RightFlipperjoint = App->physics->CreateCircle(540, 600, 6, b2_staticBody, 1.0f);
+	RightFlipperjoint = App->physics->CreateCircle(210, 519, 6, b2_staticBody, 1.0f);
 
 	
 	b2RevoluteJointDef RightJointDef;

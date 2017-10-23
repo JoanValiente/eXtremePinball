@@ -19,8 +19,11 @@ public:
 
 public:
 	p2List<PhysBody*> circles;
-	PhysBody* boxes[7];
+	PhysBody* boxes[9];
 	PhysBody* map;
+
+	SDL_Texture* map_texture;
+	SDL_Texture* ball;
 
 
 	PhysBody* sensor;

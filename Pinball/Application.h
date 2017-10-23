@@ -21,8 +21,8 @@ public:
 	ModuleTextures* textures;
 	ModuleInput* input;
 	ModuleAudio* audio;
-	ModulePlayer* player;
 	ModuleSceneIntro* scene_intro;
+	ModulePlayer* player;
 	ModulePhysics* physics;
 
 private:
