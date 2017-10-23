@@ -17,29 +17,40 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
-	b2Vec2 flipper_ver[8];
-	flipper_ver[0].Set(412 - 402, 543 - 532);
-	flipper_ver[1].Set(423 - 402, 542 - 532);
-	flipper_ver[2].Set(432 - 402, 540 - 532);
-	flipper_ver[3].Set(431 - 402, 535 - 532);
-	flipper_ver[4].Set(421 - 402, 534 - 532);
-	flipper_ver[5].Set(406 - 402, 533 - 532);
-	flipper_ver[6].Set(402 - 402, 537 - 532);
-	flipper_ver[7].Set(405 - 402, 543 - 532);
+	b2Vec2 flipper_ver[7];
+	flipper_ver[0].Set(36, 8);
+	flipper_ver[1].Set(15, 8);
+	flipper_ver[2].Set(2, 10);
+	flipper_ver[3].Set(0, 14);
+	flipper_ver[4].Set(3, 18);
+	flipper_ver[5].Set(15, 20);
+	flipper_ver[6].Set(35, 20);	
+	
 
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 7; i++) {
 		flipper_ver[i].x = PIXEL_TO_METERS(flipper_ver[i].x);
 		flipper_ver[i].y = PIXEL_TO_METERS(flipper_ver[i].y);
 	}
 
 	//Flipper
-	b2BodyDef flip;
-	flip.type = b2_dynamicBody;
-	flip.position.Set(0, 0);
-	b2Body* f1 = App->physics->world->CreateBody(&flip);
-	b2Body* f2 = App->physics->world->CreateBody(&flip);
+	
+	b2BodyDef flipR;
+	flipR.type = b2_dynamicBody;
+	flipR.position.x = 169.0f;
+	flipR.position.y = 0;
+	b2BodyDef flipL;
+	flipL.type = b2_dynamicBody;
+	flipL.position.x = 169.0f;
+	flipL.position.y = 0;
+	b2Body* f1 = App->physics->world->CreateBody(&flipL);
+	b2Body* f2 = App->physics->world->CreateBody(&flipR);
+
+	LOG("pos L", f1->GetPosition());
+	LOG("pos R", f2->GetPosition());
+
 	b2PolygonShape flipper;
-	flipper.Set(flipper_ver, 8);
+	flipper.Set(flipper_ver, 7);
+	
 
 
 	b2FixtureDef fixture;
@@ -51,10 +62,12 @@ bool ModulePlayer::Start()
 	LeftFlipper = new PhysBody();
 	LeftFlipper->body = f1;
 	f1->SetUserData(LeftFlipper);
+	
 
 	RightFlipper = new PhysBody();
 	RightFlipper->body = f2;
 	f2->SetUserData(RightFlipper);
+
 	//
 
 	// --------------------------------------------LEFT FLIPPER------------------------------------------
@@ -124,6 +137,7 @@ update_status ModulePlayer::Update()
 		LFlipperLeftFlipper->GetBodyA()->ApplyAngularImpulse(-0.3f, true);
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		RFlipperRightFlipper->GetBodyA()->ApplyAngularImpulse(0.3f, true);
+
 	return UPDATE_CONTINUE;
 }
 

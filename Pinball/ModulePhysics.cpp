@@ -308,7 +308,7 @@ bool ModulePhysics::CleanUp()
 	return true;
 }
 
-void PhysBody::GetPosition(int& x, int &y) const
+void PhysBody::GetPosition(int& x, int& y) const
 {
 	b2Vec2 pos = body->GetPosition();
 	x = METERS_TO_PIXELS(pos.x) - (width);
