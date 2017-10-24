@@ -77,7 +77,7 @@ bool ModulePlayer::Start()
 	b2RevoluteJointDef LeftJointDef;
 	LeftJointDef.bodyA = LeftFlipper->body;
 	LeftJointDef.bodyB = LeftFlipperjoint->body;
-	//LeftJointDef.collideConnected = false;
+	LeftJointDef.collideConnected = false;
 
 	b2Vec2 LsetA = { -0.32f, 0.0f };
 	b2Vec2 LsetB = LeftFlipperjoint->body->GetLocalCenter();
@@ -97,7 +97,7 @@ bool ModulePlayer::Start()
 	b2RevoluteJointDef RightJointDef;
 	RightJointDef.bodyA = RightFlipper->body;
 	RightJointDef.bodyB = RightFlipperjoint->body;
-	//RightJointDef.collideConnected = false;
+	RightJointDef.collideConnected = false;
 
 	b2Vec2 RsetA = { 0.32f, 0.0f };
 	b2Vec2 RsetB = RightFlipperjoint->body->GetLocalCenter();
