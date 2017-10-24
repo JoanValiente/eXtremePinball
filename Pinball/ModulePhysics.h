@@ -56,8 +56,7 @@ private:
 	bool debug;
 	b2MouseJoint* mouse_joint;
 	b2Body* ground;
-	PhysBody *spring;
-	PhysBody *springSurface;
+	
 	
 
 public:

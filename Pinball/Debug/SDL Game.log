@@ -1,7 +1,7 @@
 ﻿  ModuleSceneIntro.cpp
-c:\users\davidls4\documents\github\extremepinball\pinball\modulesceneintro.cpp(113): warning C4305: '=': truncation from 'double' to 'float32'
-c:\users\davidls4\documents\github\extremepinball\pinball\modulesceneintro.cpp(217): warning C4101: 'y': unreferenced local variable
-c:\users\davidls4\documents\github\extremepinball\pinball\modulesceneintro.cpp(217): warning C4101: 'x': unreferenced local variable
+c:\users\joanvil\documents\github\extremepinball\pinball\modulesceneintro.cpp(112): warning C4305: '=': truncation from 'double' to 'float32'
+c:\users\joanvil\documents\github\extremepinball\pinball\modulesceneintro.cpp(222): warning C4101: 'y': unreferenced local variable
+c:\users\joanvil\documents\github\extremepinball\pinball\modulesceneintro.cpp(222): warning C4101: 'x': unreferenced local variable
 c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\include\limits(211): warning C4577: 'noexcept' used with no exception handling mode specified; termination on exception is not guaranteed. Specify /EHsc
-  SDL Game.vcxproj -> C:\Users\davidls4\Documents\GitHub\eXtremePinball\Pinball\Debug\2D Physics - class 4.exe
-  SDL Game.vcxproj -> C:\Users\davidls4\Documents\GitHub\eXtremePinball\Pinball\Debug\2D Physics - class 4.pdb (Partial PDB)
+  SDL Game.vcxproj -> C:\Users\joanvil\Documents\GitHub\eXtremePinball\Pinball\Debug\2D Physics - class 4.exe
+  SDL Game.vcxproj -> C:\Users\joanvil\Documents\GitHub\eXtremePinball\Pinball\Debug\2D Physics - class 4.pdb (Partial PDB)

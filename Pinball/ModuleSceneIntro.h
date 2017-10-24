@@ -36,4 +36,5 @@ public:
 private:
 	PhysBody *spring;
 	PhysBody *springSurface;
+	PhysBody *limit;
 };
