@@ -33,7 +33,7 @@ bool ModulePlayer::Start()
 	}
 
 	//Flipper
-	
+	/*
 	b2BodyDef flipR;
 	flipR.type = b2_dynamicBody;
 	flipR.position.x = 169.0f;
@@ -45,12 +45,11 @@ bool ModulePlayer::Start()
 	b2Body* f1 = App->physics->world->CreateBody(&flipL);
 	b2Body* f2 = App->physics->world->CreateBody(&flipR);
 
-	LOG("pos L", f1->GetPosition());
-	LOG("pos R", f2->GetPosition());
+
 
 	b2PolygonShape flipper;
 	flipper.Set(flipper_ver, 7);
-	
+
 
 
 	b2FixtureDef fixture;
@@ -62,54 +61,56 @@ bool ModulePlayer::Start()
 	LeftFlipper = new PhysBody();
 	LeftFlipper->body = f1;
 	f1->SetUserData(LeftFlipper);
-	
+
 
 	RightFlipper = new PhysBody();
 	RightFlipper->body = f2;
 	f2->SetUserData(RightFlipper);
-
+	*/
 	//
 
 	// --------------------------------------------LEFT FLIPPER------------------------------------------
 
 	LeftFlipperjoint = App->physics->CreateCircle(104, 519, 6, b2_staticBody, 1.0f);
+	LeftFlipper = App->physics->CreateRectangle(110, 519, 45, 10, b2_dynamicBody);
 
 	b2RevoluteJointDef LeftJointDef;
 	LeftJointDef.bodyA = LeftFlipper->body;
 	LeftJointDef.bodyB = LeftFlipperjoint->body;
-	LeftJointDef.collideConnected = false;
+	//LeftJointDef.collideConnected = false;
 
-	b2Vec2 LsetA = { 0.13f, 0.12f };
+	b2Vec2 LsetA = { -0.32f, 0.0f };
 	b2Vec2 LsetB = LeftFlipperjoint->body->GetLocalCenter();
 
 	LeftJointDef.localAnchorA.Set(LsetA.x, LsetA.y);
 	LeftJointDef.localAnchorB.Set(LsetB.x, LsetB.y);
 
 	LeftJointDef.enableLimit = true;
-	LeftJointDef.lowerAngle = -45 * DEGTORAD;
-	LeftJointDef.upperAngle = 45 * DEGTORAD;
+	LeftJointDef.lowerAngle = -30 * DEGTORAD;
+	LeftJointDef.upperAngle = 25 * DEGTORAD;
 
 	// --------------------------------------------RIGHT FLIPPER------------------------------------------
 
 	RightFlipperjoint = App->physics->CreateCircle(210, 519, 6, b2_staticBody, 1.0f);
+	RightFlipper = App->physics->CreateRectangle(204, 519, 45, 10, b2_dynamicBody);
 
-	
 	b2RevoluteJointDef RightJointDef;
 	RightJointDef.bodyA = RightFlipper->body;
 	RightJointDef.bodyB = RightFlipperjoint->body;
-	RightJointDef.collideConnected = false;
+	//RightJointDef.collideConnected = false;
 
-	b2Vec2 RsetA = { 0.13f, 0.12f };
+	b2Vec2 RsetA = { 0.32f, 0.0f };
 	b2Vec2 RsetB = RightFlipperjoint->body->GetLocalCenter();
 
 	RightJointDef.localAnchorA.Set(RsetA.x, RsetA.y);
 	RightJointDef.localAnchorB.Set(RsetB.x, RsetB.y);
 
 	RightJointDef.enableLimit = true;
-	RightJointDef.lowerAngle = -225 * DEGTORAD;
-	RightJointDef.upperAngle = -135 * DEGTORAD;
+	RightJointDef.lowerAngle = -30 * DEGTORAD;
+	RightJointDef.upperAngle = 25 * DEGTORAD;
 
 	// --------------------------------------------------------------------------------------
+
 
 
 	// LEFT FLIPPER
