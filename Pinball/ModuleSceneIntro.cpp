@@ -96,23 +96,24 @@ bool ModuleSceneIntro::Start()
 
 	// -------------------------------------------Spring-------------------------------------------------------
 	
-	spring = App->physics->CreateRectangle(304, 492, 11, 6, b2_dynamicBody);
-	springSurface = App->physics->CreateRectangle(304, 503, 11, 10, b2_staticBody);
-
-
-
+	spring = App->physics->CreateRectangle(303, 450, 15, 6, b2_dynamicBody);
+	springSurface = App->physics->CreateRectangle(303, 503, 15, 10, b2_staticBody);
+	spring->body->GetFixtureList()->SetDensity(8.0f);
+	
 	b2PrismaticJointDef springJoint;
-	springJoint.collideConnected = true;
+	springJoint.collideConnected = false;
 	springJoint.bodyA = spring->body;
 	springJoint.bodyB = springSurface->body;
 
 	springJoint.localAnchorA.Set(0, 0);
-	springJoint.localAnchorB.Set(0, -1);
+	springJoint.localAnchorB.Set(0, -1.1f);
 	springJoint.localAxisA.Set(0, -1);
 	springJoint.enableLimit = true;
 	springJoint.lowerTranslation = -0.02;
 	springJoint.upperTranslation = 1;
 	(b2PrismaticJoint*)App->physics->world->CreateJoint(&springJoint);
+
+
 
 	//--------------------------------------------------------------------------------------------------------
 	map = App->physics->CreateChain(0, 0, map_shape, 98);
@@ -158,7 +159,7 @@ bool ModuleSceneIntro::Start()
 			boxes[i]->body->GetFixtureList()->SetRestitution(2.5f);
 		}
 		else {
-			boxes[i]->body->GetFixtureList()->SetRestitution(0.3f);
+			boxes[i]->body->GetFixtureList()->SetRestitution(0.2f);
 		}
 	}
 	
@@ -178,6 +179,11 @@ update_status ModuleSceneIntro::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
+		circles.add(App->physics->CreateCircle(304, 350, 6, b2_dynamicBody, 1.0f));
+		circles.getLast()->data->listener = this;
+		circles.getLast()->data->body->SetBullet(true);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN){
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 6, b2_dynamicBody, 1.0f));
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
@@ -185,7 +191,7 @@ update_status ModuleSceneIntro::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		spring->body->ApplyForce(b2Vec2(0, 10), b2Vec2(0, 0), true);
+		spring->body->ApplyForce(b2Vec2(0, 5), b2Vec2(0, 0), true);
 	}
 	
 	if (destroy != 100) {
@@ -195,7 +201,7 @@ update_status ModuleSceneIntro::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		spring->body->ApplyForce(b2Vec2(0, -100), b2Vec2(0, 0), true);
+		spring->body->ApplyForce(b2Vec2(0, -300), b2Vec2(0, 0), true);
 	}
 	
 	
