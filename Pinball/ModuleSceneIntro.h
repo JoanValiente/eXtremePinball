@@ -21,7 +21,7 @@ public:
 	p2List<PhysBody*> circles;
 	PhysBody* boxes[9];
 	PhysBody* map;
-
+	PhysBody* bouncers[5];
 	SDL_Texture* map_texture;
 	SDL_Texture* ball;
 
@@ -32,6 +32,7 @@ public:
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
+	int destroy = 100;
 
 private:
 	PhysBody *spring;

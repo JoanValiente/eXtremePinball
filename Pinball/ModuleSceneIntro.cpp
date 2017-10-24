@@ -120,7 +120,7 @@ bool ModuleSceneIntro::Start()
 	map->body->GetFixtureList()->SetRestitution(0.5f);
 
 	
-	PhysBody* bouncers[5];
+
 
 	bouncers[0] = App->physics->CreateCircle(180, 145, 18, b2_staticBody,1);
 	bouncers[1] = App->physics->CreateCircle(135, 198, 18, b2_staticBody,1);
@@ -132,14 +132,13 @@ bool ModuleSceneIntro::Start()
 		for (int i = 0; i < 5; i++) {
 			if (i >= 3) {
 				bouncers[i]->body->SetType(b2_staticBody);
-				bouncers[i]->body->GetFixtureList()->SetRestitution(4);
+				bouncers[i]->body->GetFixtureList()->SetRestitution(2.0f);
 			}
 			else {
 				bouncers[i]->body->GetFixtureList()->SetRestitution(1.5f);
 			}
 		}
 	}
-
 
 	boxes[0] = App->physics->CreateRectangle(21, 111, 15, 15, b2_staticBody);
 	boxes[1] = App->physics->CreateRectangle(27, 127, 15, 15, b2_staticBody);
@@ -156,13 +155,13 @@ bool ModuleSceneIntro::Start()
 	for (int i = 0; i < 9; i++) {
 		boxes[i]->body->SetType(b2_staticBody);
 		if (i >= 7) {
-			boxes[i]->body->GetFixtureList()->SetRestitution(4);
+			boxes[i]->body->GetFixtureList()->SetRestitution(2.5f);
 		}
 		else {
 			boxes[i]->body->GetFixtureList()->SetRestitution(0.3f);
 		}
 	}
-
+	
 	return ret;
 }
 
@@ -177,16 +176,21 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-
-	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 6, b2_dynamicBody, 2.0f));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 6, b2_dynamicBody, 1.0f));
 		circles.getLast()->data->listener = this;
+		circles.getLast()->data->body->SetBullet(true);
 	}
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		spring->body->ApplyForce(b2Vec2(0, 10), b2Vec2(0, 0), true);
+	}
+	
+	if (destroy != 100) {
+		App->physics->world->DestroyBody(boxes[destroy]->body);
+		destroy=100;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
@@ -220,9 +224,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	
 	for (int i = 0; i < 7; i++) {
 		if (bodyB == boxes[i]) {
-			
+			destroy = i;
 		}
 	}
-
-	
 }
