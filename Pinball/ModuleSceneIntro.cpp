@@ -53,8 +53,8 @@ bool ModuleSceneIntro::Start()
 		278, 78,
 		294, 114,
 		295, 147,
-		294, 490,
-		312, 490,
+		294, 520,
+		312, 520,
 		312, 114,
 		299, 82,
 		279, 57,
@@ -96,8 +96,8 @@ bool ModuleSceneIntro::Start()
 
 	// -------------------------------------------Spring-------------------------------------------------------
 	
-	spring = App->physics->CreateRectangle(654, 527, 11, 6, b2_dynamicBody);
-	springSurface = App->physics->CreateRectangle(653, 555, 11, 10, b2_staticBody);
+	spring = App->physics->CreateRectangle(304, 492, 11, 6, b2_dynamicBody);
+	springSurface = App->physics->CreateRectangle(304, 503, 11, 10, b2_staticBody);
 
 
 
@@ -117,7 +117,7 @@ bool ModuleSceneIntro::Start()
 	//--------------------------------------------------------------------------------------------------------
 	map = App->physics->CreateChain(0, 0, map_shape, 98);
 	map->body->SetType(b2_staticBody);
-	map->body->GetFixtureList()->SetDensity(0.1f);
+	map->body->GetFixtureList()->SetRestitution(0.5f);
 
 	
 	PhysBody* bouncers[5];
@@ -131,7 +131,6 @@ bool ModuleSceneIntro::Start()
 	for (int i = 0; i < 3; i++) {
 		for (int i = 0; i < 5; i++) {
 			if (i >= 3) {
-				bouncers[i]->body->GetFixtureList()->SetDensity(100);
 				bouncers[i]->body->SetType(b2_staticBody);
 				bouncers[i]->body->GetFixtureList()->SetRestitution(4);
 			}
