@@ -16,15 +16,19 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	void Destroy();
 
 public:
 	p2List<PhysBody*> circles;
 	PhysBody* boxes[9];
 	PhysBody* map;
 	PhysBody* bouncers[5];
+	PhysBody* walls[5];
+
 	SDL_Texture* map_texture;
 	SDL_Texture* ball;
-
+	SDL_Texture* box;
+	SDL_Texture* cones[4];
 
 	PhysBody* sensor;
 	bool sensed;

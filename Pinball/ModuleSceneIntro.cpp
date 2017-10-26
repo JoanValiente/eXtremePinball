@@ -28,7 +28,11 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	map_texture = App->textures->Load("pinball/map.png");
 	ball = App->textures->Load("pinball/ball.png");
-
+	box = App->textures->Load("pinball/box.png");
+	cones[0] = App->textures->Load("pinball/cone1.png");
+	cones[1] = App->textures->Load("pinball/cone2.png");
+	cones[2] = App->textures->Load("pinball/cone3.png");
+	cones[3] = App->textures->Load("pinball/cone4.png");
 
 	int map_shape[98] = {
 		233, 572,
@@ -93,6 +97,32 @@ bool ModuleSceneIntro::Start()
 		127, 477
 	};
 
+	int beam[8]{
+		107, 63,
+		119, 57,
+		133, 86,
+		122, 92
+	};
+
+	int wall_left[]{
+		44, 428,
+		49, 428,
+		49, 484,
+		98, 510,
+		92, 515,
+		44, 488
+	};
+
+
+	int wall_right[]{
+		258, 429,
+		264, 429,
+		264, 488,
+		220, 516,
+		218, 510,
+		258, 486
+	};
+	
 
 	// -------------------------------------------Spring-------------------------------------------------------
 	
@@ -162,6 +192,21 @@ bool ModuleSceneIntro::Start()
 			boxes[i]->body->GetFixtureList()->SetRestitution(0.2f);
 		}
 	}
+
+	walls[0] = App->physics->CreateChain(0, 0, beam, 8);
+	walls[1] = App->physics->CreateChain(35, 0, beam, 8);
+	walls[2] = App->physics->CreateChain(70, 0, beam, 8);
+	walls[3] = App->physics->CreateChain(0, 0, wall_left, 12);
+	walls[4] = App->physics->CreateChain(0, 0, wall_right, 12);
+
+
+	for (int i = 0; i < 5; i++) {
+		walls[i]->body->SetType(b2_staticBody);
+		if (i < 3) {
+			walls[i]->body->GetFixtureList()->SetRestitution(0.5f);
+		}
+	}
+
 	
 	return ret;
 }
@@ -193,15 +238,10 @@ update_status ModuleSceneIntro::Update()
 	{
 		spring->body->ApplyForce(b2Vec2(0, 5), b2Vec2(0, 0), true);
 	}
-	
-	if (destroy != 100) {
-		App->physics->world->DestroyBody(boxes[destroy]->body);
-		destroy=100;
-	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		spring->body->ApplyForce(b2Vec2(0, -300), b2Vec2(0, 0), true);
+		spring->body->ApplyForce(b2Vec2(0, -100), b2Vec2(0, 0), true);
 	}
 	
 	
@@ -218,19 +258,39 @@ update_status ModuleSceneIntro::Update()
 		c = c->next;
 	}
 
+	for (int i = 0; i < 7; i++) {
+		int x, y;
+		if (boxes[i] != nullptr) {
+			boxes[i]->GetPosition(x, y);
+			if (i < 3) {
+				App->renderer->Blit(box, x, y, NULL);
+			}
+			else if (i < 7) {
+				App->renderer->Blit(cones[i - 3], x - 4, y, NULL);
+			}
+		}
+	}
+
+	Destroy();
 
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	int x, y;
 
 
-	
 	for (int i = 0; i < 7; i++) {
 		if (bodyB == boxes[i]) {
 			destroy = i;
 		}
+	}
+}
+
+void ModuleSceneIntro::Destroy(){
+	if (destroy != 100) {
+		App->physics->world->DestroyBody(boxes[destroy]->body);
+		boxes[destroy] = nullptr;
+		destroy = 100;
 	}
 }
