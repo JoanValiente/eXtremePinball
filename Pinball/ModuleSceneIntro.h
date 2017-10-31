@@ -24,6 +24,8 @@ public:
 	PhysBody* map;
 	PhysBody* bouncers[5];
 	PhysBody* walls[5];
+	PhysBody* end;
+	PhysBody* toDestroy;
 
 	SDL_Texture* map_texture;
 	SDL_Texture* ball;
@@ -38,8 +40,12 @@ public:
 	bool ray_on;
 	int destroy = 100;
 
+	int score = 0;
+
 private:
 	PhysBody *spring;
 	PhysBody *springSurface;
 	PhysBody *limit;
+	float springDown = 1.4f;
+	bool create;
 };
