@@ -20,7 +20,7 @@ public:
 
 public:
 	p2List<PhysBody*> circles;
-	PhysBody* boxes[9];
+	PhysBody* boxes[13];
 	PhysBody* map;
 	PhysBody* bouncers[5];
 	PhysBody* walls[5];

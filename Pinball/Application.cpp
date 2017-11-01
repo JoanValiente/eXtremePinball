@@ -36,7 +36,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(audio);
 	AddModule(fonts);
-	AddModule(ui);
+
 	
 	// Scenes
 
@@ -44,6 +44,7 @@ Application::Application()
 
 	// Player
 
+	AddModule(ui);
 	AddModule(player);
 
 }

@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 #include "ModuleWindow.h"
+#include "ModuleUI.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -168,7 +169,7 @@ bool ModuleSceneIntro::Start()
 		for (int i = 0; i < 5; i++) {
 			if (i >= 3) {
 				bouncers[i]->body->SetType(b2_staticBody);
-				bouncers[i]->body->GetFixtureList()->SetRestitution(2.0f);
+				bouncers[i]->body->GetFixtureList()->SetRestitution(1.5f);
 			}
 			else {
 				bouncers[i]->body->GetFixtureList()->SetRestitution(1.5f);
@@ -218,6 +219,12 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	if (create == true) {
+
+		/*
+		circles.add(App->physics->CreateCircle(304, 350, 6, b2_dynamicBody, 1.0f));
+		circles.getLast()->data->listener = this;
+		circles.getLast()->data->body->SetBullet(true);
+		*/
 
 		for (int i = 0; i < 9; i++) {
 			if (boxes[i] != nullptr) {
@@ -293,15 +300,28 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	for (int i = 0; i < 7; i++) {
-		if (bodyB == boxes[i]) {
+	for (int i = 0; i < 9; i++)
+	{
+		if (bodyB == boxes[i]) 
+		{
 			toDestroy = boxes[i];
 			boxes[i] = nullptr;
 		}
 	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		if (bodyB == bouncers[i]) 
+		{
+			App->ui->score += 10;
+
+		}
+	}
+
 	if (bodyB == end) {
 		toDestroy = circles.getLast()->data;
 		circles.clear();
+		App->ui->lifes--;
 		create = true;
 	}
 }
