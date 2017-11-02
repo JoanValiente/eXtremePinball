@@ -52,7 +52,26 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	skate_2.PushBack({ 1210,140,110,140 });
 	skate_2.speed = 0.2f;
 
+	greensensor1.PushBack({ 28,0,16,16 });
+	greensensor1.speed = 0.01f;
 
+	greensensor2.PushBack({ 0,77,12,12 });
+	greensensor2.speed = 0.01f;
+
+	greensensor3.PushBack({ 14,77,10,10 });
+	greensensor3.speed = 0.01f;
+
+	greensensor4.PushBack({ 27,77,7,7 });
+	greensensor4.speed = 0.01f;
+
+	redsensor.PushBack({ 77,0,16,16 });
+	redsensor.speed = 0.01f;
+
+	redsensor.PushBack({ 41,39,0,29 });
+	redsensor.speed = 0.01f;
+
+	shiny_bouncer.PushBack({ 0,29,36,36 });
+	shiny_bouncer.speed = 0.2f;
 	sensed = false;
 }
 
@@ -77,6 +96,7 @@ bool ModuleSceneIntro::Start()
 	box = App->textures->Load("pinball/box.png");
 	skate_texture = App->textures->Load("pinball/skate.png");
 	skate_texture_2 = App->textures->Load("pinball/skate2.png");
+	sensors_texture = App->textures->Load("pinball/sensors.png");
 	cones[0] = App->textures->Load("pinball/cone1.png");
 	cones[1] = App->textures->Load("pinball/cone2.png");
 	cones[2] = App->textures->Load("pinball/cone3.png");
@@ -185,6 +205,10 @@ bool ModuleSceneIntro::Start()
 	RedSensors[2] = App->physics->CreateRectangleSensor(167, 61, 11, 11);
 	RedSensors[3] = App->physics->CreateRectangleSensor(179, 90, 11, 11);
 
+	BouncerSensors[0] = App->physics->CreateCircleSensor(180, 145, 19);
+	BouncerSensors[1] = App->physics->CreateCircleSensor(135, 198, 19);
+	BouncerSensors[2] = App->physics->CreateCircleSensor(219, 200, 19);
+
 	// -------------------------------------------Spring-------------------------------------------------------
 	
 	spring = App->physics->CreateRectangle(303, 450, 15, 4, b2_dynamicBody);
@@ -219,6 +243,7 @@ bool ModuleSceneIntro::Start()
 	bouncers[0] = App->physics->CreateCircle(180, 145, 18, b2_staticBody,1);
 	bouncers[1] = App->physics->CreateCircle(135, 198, 18, b2_staticBody,1);
 	bouncers[2] = App->physics->CreateCircle(219, 200, 18, b2_staticBody,1);
+
 	bouncers[3] = App->physics->CreateChain(0, 0, bouncer_left, 6);
 	bouncers[4] = App->physics->CreateChain(115, 0, bouncer_right, 6);
 
@@ -337,7 +362,90 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 
+	//------------------------------------------------------------------------------
+	if (ShinyBouncer1 == true) {
+		App->renderer->Blit(sensors_texture, 162, 127, &(shiny_bouncer.GetCurrentFrame()));
+		if (shiny_bouncer.current_frame == 0) {
+			shiny_bouncer.Reset();
+			ShinyBouncer1 = false;
+		}
+	}
+	if (ShinyBouncer2 == true) {
+		App->renderer->Blit(sensors_texture, 117, 181, &(shiny_bouncer.GetCurrentFrame()));
+		if (shiny_bouncer.current_frame == 0) {
+			shiny_bouncer.Reset();
+			ShinyBouncer2 = false;
+		}
+	}
+	if (ShinyBouncer3 == true) {
+		App->renderer->Blit(sensors_texture, 201, 183, &(shiny_bouncer.GetCurrentFrame()));
+		if (shiny_bouncer.current_frame == 0) {
+			shiny_bouncer.Reset();
+			ShinyBouncer3 = false;
+		}
+	
+	}
+	//------------------------------------------------------------------------------
+	if (GreenSensor1 == true) {
+		App->renderer->Blit(sensors_texture, 150, 19, &(greensensor1.GetCurrentFrame()));
+		if (greensensor1.current_frame == 0) {
+			greensensor1.Reset();
+			GreenSensor1 = false;
+		}
+	}
+	if (GreenSensor2 == true) {
+		App->renderer->Blit(sensors_texture, 126, 29, &(greensensor2.GetCurrentFrame()));
+		if (greensensor2.current_frame == 0) {
+			greensensor2.Reset();
+			GreenSensor2 = false;
+		}
+	}
+	if (GreenSensor3 == true) {
+		App->renderer->Blit(sensors_texture, 106, 40, &(greensensor3.GetCurrentFrame()));
+		if (greensensor3.current_frame == 0) {
+			greensensor3.Reset();
+			GreenSensor3 = false;
+		}
+	
+	}
+	if (GreenSensor4 == true) {
+		App->renderer->Blit(sensors_texture, 94, 58, &(greensensor4.GetCurrentFrame()));
+		if (greensensor4.current_frame == 0) {
+			greensensor4.Reset();
+			GreenSensor4 = false;
+		}
+	}
+	//------------------------------------------------------------------------------
+	if (RedSensor1 == true) {
+		App->renderer->Blit(sensors_texture, 126, 56, &(redsensor.GetCurrentFrame()));
+		if (redsensor.current_frame == 0) {
+			redsensor.Reset();
+			RedSensor1 = false;
+		}
+	}
+	if (RedSensor2 == true) {
+		App->renderer->Blit(sensors_texture, 140, 85, &(redsensor.GetCurrentFrame()));
+		if (redsensor.current_frame == 0) {
+			redsensor.Reset();
+			RedSensor2 = false;
+		}
+	}
+	if (RedSensor3 == true) {
+		App->renderer->Blit(sensors_texture, 162, 56, &(redsensor.GetCurrentFrame()));
+		if (redsensor.current_frame == 0) {
+			redsensor.Reset();
+			RedSensor3 = false;
+		}
 
+	}
+	if (RedSensor4 == true) {
+		App->renderer->Blit(sensors_texture, 174, 85, &(redsensor.GetCurrentFrame()));
+		if (redsensor.current_frame == 0) {
+			redsensor.Reset();
+			RedSensor4 = false;
+		}
+	}
+	//------------------------------------------------------------------------------
 	return UPDATE_CONTINUE;
 }
 
@@ -377,6 +485,44 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		skate2 = true;
 	}
 
+	//-----------------------------------------------------------
+
+	if (bodyB == GreenSensors[0]) {
+		GreenSensor1 = true;
+	}
+	if (bodyB == GreenSensors[1]) {
+		GreenSensor2 = true;
+	}
+	if (bodyB == GreenSensors[2]) {
+		GreenSensor3 = true;
+	}
+	if (bodyB == GreenSensors[3]) {
+		GreenSensor4 = true;
+	}
+	//-----------------------------------------------------------
+	if (bodyB == RedSensors[0]) {
+		RedSensor1 = true;
+	}
+	if (bodyB == RedSensors[1]) {
+		RedSensor2 = true;
+	}
+	if (bodyB == RedSensors[2]) {
+		RedSensor3 = true;
+	}
+	if (bodyB == RedSensors[3]) {
+		RedSensor4 = true;
+	}
+	//-----------------------------------------------------------
+	if (bodyB == BouncerSensors[0]) {
+		ShinyBouncer1 = true;
+	}
+	if (bodyB == BouncerSensors[1]) {
+		ShinyBouncer2 = true;
+	}
+	if (bodyB == BouncerSensors[2]) {
+		ShinyBouncer3 = true;
+	}
+	
 }
 void ModuleSceneIntro::Destroy(){
 	
