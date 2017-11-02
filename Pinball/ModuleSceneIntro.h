@@ -1,10 +1,11 @@
-#pragma once
 #include "Module.h"
 #include "p2List.h"
 #include "p2Point.h"
 #include "Globals.h"
+#include "Animation.h"
 
 class PhysBody;
+struct SDL_Texture;
 
 class ModuleSceneIntro : public Module
 {
@@ -33,16 +34,11 @@ public:
 	SDL_Texture* ball;
 	SDL_Texture* box;
 	SDL_Texture* cones[4];
+	SDL_Texture* skate_texture;
 
-	PhysBody* sensor;
-	bool sensed;
+	Animation skate;
 
 	uint bonus_fx;
-	p2Point<int> ray;
-	bool ray_on;
-	int destroy = 100;
-
-	int score = 0;
 
 private:
 	PhysBody *spring;
@@ -50,4 +46,8 @@ private:
 	PhysBody *limit;
 	float springDown = 1.4f;
 	bool create;
+	bool skate1 = false;
+	PhysBody* sensor;
+	bool sensed;
 };
+

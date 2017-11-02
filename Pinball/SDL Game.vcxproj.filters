@@ -62,7 +62,7 @@
     <ClInclude Include="ModuleFonts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\1-O\Game\Motor2D\Animation.h">
+    <ClInclude Include="Animation.h">
       <Filter>Header Files\Containers</Filter>
     </ClInclude>
   </ItemGroup>

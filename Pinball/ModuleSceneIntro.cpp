@@ -12,7 +12,20 @@
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
-	ray_on = false;
+
+	skate.PushBack({ 164,0,164,162 });
+	skate.PushBack({ 328,0,164,162 });
+	skate.PushBack({ 656,0,164,162 });
+	skate.PushBack({ 820,0,164,162 });
+	skate.PushBack({ 984,0,164,162 });
+	skate.PushBack({ 0,162,164,162 });
+	skate.PushBack({ 164,162,164,162 });
+	skate.PushBack({ 328,162,164,162 });
+	skate.PushBack({ 656,162,164,162 });
+	skate.PushBack({ 820,162,164,162 });
+	skate.PushBack({ 984,162,164,162 });
+	skate.speed = 0.2f; 
+
 	sensed = false;
 }
 
@@ -25,6 +38,8 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	App->window->SetTitle("eXtreme Paintball");
+
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	create = true;
@@ -33,6 +48,7 @@ bool ModuleSceneIntro::Start()
 	map_texture = App->textures->Load("pinball/map.png");
 	ball = App->textures->Load("pinball/ball.png");
 	box = App->textures->Load("pinball/box.png");
+	skate_texture = App->textures->Load("pinball/skate.png");
 	cones[0] = App->textures->Load("pinball/cone1.png");
 	cones[1] = App->textures->Load("pinball/cone2.png");
 	cones[2] = App->textures->Load("pinball/cone3.png");
@@ -217,12 +233,19 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && circles.count() == 0)
 	{
 		circles.add(App->physics->CreateCircle(304, 350, 6, b2_dynamicBody, 1.0f));
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		skate1 = true;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && circles.count() == 0){
 			circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 6, b2_dynamicBody, 1.0f));
 			circles.getLast()->data->listener = this;
@@ -252,8 +275,13 @@ update_status ModuleSceneIntro::Update()
 		boxes[6] = App->physics->CreateRectangle(271, 297, 15, 15, b2_staticBody);
 		boxes[7] = App->physics->CreateRectangle(272, 511, 15, 15, b2_staticBody);
 		boxes[8] = App->physics->CreateRectangle(34, 511, 15, 15, b2_staticBody);
+		boxes[9] = App->physics->CreateRectangle(45, 285, 15, 15, b2_staticBody);
+		boxes[10] = App->physics->CreateRectangle(263, 345, 15, 15, b2_staticBody);
+		boxes[11] = App->physics->CreateRectangle(270, 195, 15, 15, b2_staticBody);
+		boxes[12] = App->physics->CreateRectangle(70, 105, 15, 15, b2_staticBody);
 
-		for (int i = 0; i < 9; i++) {
+
+		for (int i = 0; i < 13; i++) {
 			boxes[i]->body->SetType(b2_staticBody);
 			if (i >= 7) {
 				boxes[i]->body->GetFixtureList()->SetRestitution(2.5f);
@@ -304,7 +332,14 @@ update_status ModuleSceneIntro::Update()
 
 	Destroy();
 
-	App->window->SetTitle("eXtreme Paintball");
+	if (skate1 == true) {
+		App->renderer->Blit(skate_texture, 175, 1, &(skate.GetCurrentFrame()));
+		if (skate.current_frame == 0) {
+			skate.Reset();
+			skate1 = false;
+		}
+	}
+	
 
 	return UPDATE_CONTINUE;
 }
@@ -317,6 +352,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		{
 			toDestroy = boxes[i];
 			boxes[i] = nullptr;
+			App->ui->score += 25;
 		}
 	}
 
