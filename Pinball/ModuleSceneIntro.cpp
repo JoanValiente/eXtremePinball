@@ -290,7 +290,36 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
+	App->textures->Unload(map_texture);
+	App->textures->Unload(ball);
+	App->textures->Unload(box);
+	App->textures->Unload(skate_texture);
+	App->textures->Unload(skate_texture_2);
+	App->textures->Unload(sensors_texture);
+	for (int i = 0; i < 4; i++) {
+		App->textures->Unload(cones[i]);
+	}
 
+
+	/*
+	map_texture = App->textures->Load("pinball/map.png");
+	ball = App->textures->Load("pinball/ball.png");
+	box = App->textures->Load("pinball/box.png");
+	skate_texture = App->textures->Load("pinball/skate.png");
+	skate_texture_2 = App->textures->Load("pinball/skate2.png");
+	sensors_texture = App->textures->Load("pinball/sensors.png");
+	cones[0] = App->textures->Load("pinball/cone1.png");
+	cones[1] = App->textures->Load("pinball/cone2.png");
+	cones[2] = App->textures->Load("pinball/cone3.png");
+	cones[3] = App->textures->Load("pinball/cone4.png");
+
+	bouncersfx = App->audio->LoadFx("pinball/soundeffects/bouncers.wav");
+	startfx = App->audio->LoadFx("pinball/soundeffects/start.wav");
+	sensorsfx = App->audio->LoadFx("pinball/soundeffects/sensors.wav");
+	bottombouncersfx = App->audio->LoadFx("pinball/soundeffects/bottombouncers.wav");
+	bonusfx = App->audio->LoadFx("pinball/soundeffects/bonus.wav");
+	boxesfx = App->audio->LoadFx("pinball/soundeffects/boxes.wav");
+	*/
 	return true;
 }
 
