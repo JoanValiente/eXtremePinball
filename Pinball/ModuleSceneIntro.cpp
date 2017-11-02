@@ -330,6 +330,9 @@ update_status ModuleSceneIntro::Update()
 		c = c->next;
 	}
 
+	
+
+
 	for (int i = 0; i < 7; i++) {
 		int x, y;
 		if (boxes[i] != nullptr) {
@@ -479,10 +482,12 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if (bodyB == skate1sensor) {
 		skate1 = true;
+		App->ui->score += 50;
 	}
 
 	if (bodyB == skate2sensor) {
 		skate2 = true;
+		App->ui->score += 50;
 	}
 
 	//-----------------------------------------------------------

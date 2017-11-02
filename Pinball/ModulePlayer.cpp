@@ -4,6 +4,8 @@
 #include "ModuleRender.h"
 #include "ModuleInput.h"
 #include "ModulePhysics.h"
+#include "ModuleTextures.h"
+#include "ModuleSceneIntro.h"
 
 #include "Box2D/Box2D/Box2D.h"
 
@@ -26,6 +28,9 @@ bool ModulePlayer::Start()
 	flipper_ver[5].Set(15, 20);
 	flipper_ver[6].Set(35, 20);	
 	
+	flipper = App->textures->Load("pinball/flipper.png");
+	flipper2 = App->textures->Load("pinball/flipper_2.png");
+
 
 	for (int i = 0; i < 7; i++) {
 		flipper_ver[i].x = PIXEL_TO_METERS(flipper_ver[i].x);
@@ -138,6 +143,11 @@ update_status ModulePlayer::Update()
 		LFlipperLeftFlipper->GetBodyA()->ApplyAngularImpulse(-0.3f, true);
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		RFlipperRightFlipper->GetBodyA()->ApplyAngularImpulse(0.3f, true);
+
+
+	App->renderer->Blit(flipper, 170, 510, NULL, 1.0f, RightFlipper->GetRotation());
+
+	App->renderer->Blit(flipper2, 55, 510, NULL, 1.0f, LeftFlipper->GetRotation());
 
 	return UPDATE_CONTINUE;
 }
