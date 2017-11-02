@@ -26,6 +26,33 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	skate.PushBack({ 984,162,164,162 });
 	skate.speed = 0.2f; 
 
+	skate_2.PushBack({0,0,110,140 });
+	skate_2.PushBack({ 110,0,110,140 });
+	skate_2.PushBack({ 220,0,110,140 });
+	skate_2.PushBack({ 330,0,110,140 });
+	skate_2.PushBack({ 440,0,110,140 });
+	skate_2.PushBack({ 550,0,110,140 });
+	skate_2.PushBack({ 660,0,110,140 });
+	skate_2.PushBack({ 770,0,110,140 });
+	skate_2.PushBack({ 880,0,110,140 });
+	skate_2.PushBack({ 990,0,110,140 });
+	skate_2.PushBack({ 1100,0,110,140 });
+	skate_2.PushBack({ 1210,0,110,140 });
+	skate_2.PushBack({ 0,140,110,140 });
+	skate_2.PushBack({ 110,140,110,140 });
+	skate_2.PushBack({ 220,140,110,140 });
+	skate_2.PushBack({ 330,140,110,140 });
+	skate_2.PushBack({ 440,140,110,140 });
+	skate_2.PushBack({ 550,140,110,140 });
+	skate_2.PushBack({ 660,140,110,140 });
+	skate_2.PushBack({ 770,140,110,140 });
+	skate_2.PushBack({ 880,140,110,140 });
+	skate_2.PushBack({ 990,140,110,140 });
+	skate_2.PushBack({ 1100,140,110,140 });
+	skate_2.PushBack({ 1210,140,110,140 });
+	skate_2.speed = 0.2f;
+
+
 	sensed = false;
 }
 
@@ -49,6 +76,7 @@ bool ModuleSceneIntro::Start()
 	ball = App->textures->Load("pinball/ball.png");
 	box = App->textures->Load("pinball/box.png");
 	skate_texture = App->textures->Load("pinball/skate.png");
+	skate_texture_2 = App->textures->Load("pinball/skate2.png");
 	cones[0] = App->textures->Load("pinball/cone1.png");
 	cones[1] = App->textures->Load("pinball/cone2.png");
 	cones[2] = App->textures->Load("pinball/cone3.png");
@@ -185,6 +213,8 @@ bool ModuleSceneIntro::Start()
 
 	end = App->physics->CreateRectangleSensor(150, 700, 400, 10);
 
+	skate1sensor = App->physics->CreateRectangleSensor(285,130,15,15);
+	skate2sensor = App->physics->CreateRectangleSensor(65, 350, 15, 15);
 
 	bouncers[0] = App->physics->CreateCircle(180, 145, 18, b2_staticBody,1);
 	bouncers[1] = App->physics->CreateCircle(135, 198, 18, b2_staticBody,1);
@@ -196,10 +226,10 @@ bool ModuleSceneIntro::Start()
 		for (int i = 0; i < 5; i++) {
 			if (i >= 3) {
 				bouncers[i]->body->SetType(b2_staticBody);
-				bouncers[i]->body->GetFixtureList()->SetRestitution(1.5f);
+				bouncers[i]->body->GetFixtureList()->SetRestitution(1.0f);
 			}
 			else {
-				bouncers[i]->body->GetFixtureList()->SetRestitution(1.5f);
+				bouncers[i]->body->GetFixtureList()->SetRestitution(1.0f);
 			}
 		}
 	}
@@ -241,56 +271,15 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->body->SetBullet(true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		skate1 = true;
-	}
-
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && circles.count() == 0){
 			circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 6, b2_dynamicBody, 1.0f));
 			circles.getLast()->data->listener = this;
 			circles.getLast()->data->body->SetBullet(true);
 	}
 
-	if (create == true) {
-
-		/*
-		circles.add(App->physics->CreateCircle(304, 350, 6, b2_dynamicBody, 1.0f));
-		circles.getLast()->data->listener = this;
-		circles.getLast()->data->body->SetBullet(true);
-		*/
-
-		for (int i = 0; i < 9; i++) {
-			if (boxes[i] != nullptr) {
-				App->physics->world->DestroyBody(boxes[i]->body);
-			}
-		}
-
-		boxes[0] = App->physics->CreateRectangle(21, 111, 15, 15, b2_staticBody);
-		boxes[1] = App->physics->CreateRectangle(27, 127, 15, 15, b2_staticBody);
-		boxes[2] = App->physics->CreateRectangle(33, 142, 15, 15, b2_staticBody);
-		boxes[3] = App->physics->CreateRectangle(274, 224, 15, 15, b2_staticBody);
-		boxes[4] = App->physics->CreateRectangle(282, 250, 15, 15, b2_staticBody);
-		boxes[5] = App->physics->CreateRectangle(282, 278, 15, 15, b2_staticBody);
-		boxes[6] = App->physics->CreateRectangle(271, 297, 15, 15, b2_staticBody);
-		boxes[7] = App->physics->CreateRectangle(272, 511, 15, 15, b2_staticBody);
-		boxes[8] = App->physics->CreateRectangle(34, 511, 15, 15, b2_staticBody);
-		boxes[9] = App->physics->CreateRectangle(45, 285, 15, 15, b2_staticBody);
-		boxes[10] = App->physics->CreateRectangle(263, 345, 15, 15, b2_staticBody);
-		boxes[11] = App->physics->CreateRectangle(270, 195, 15, 15, b2_staticBody);
-		boxes[12] = App->physics->CreateRectangle(70, 105, 15, 15, b2_staticBody);
-
-
-		for (int i = 0; i < 13; i++) {
-			boxes[i]->body->SetType(b2_staticBody);
-			if (i >= 7) {
-				boxes[i]->body->GetFixtureList()->SetRestitution(2.5f);
-			}
-			else {
-				boxes[i]->body->GetFixtureList()->SetRestitution(0.2f);
-			}
-		}
-		create = false;
+	if (create == true && App->ui->lifes >= 0) 
+	{
+		Create();
 	}
 
 	spring->body->ApplyForce(b2Vec2(0, -20), b2Vec2(0, 0), true);
@@ -340,6 +329,14 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 	
+	if (skate2 == true) {
+		App->renderer->Blit(skate_texture_2,1, 274, &(skate_2.GetCurrentFrame()));
+		if (skate_2.current_frame == 0) {
+			skate_2.Reset();
+			skate2 = false;
+		}
+	}
+
 
 	return UPDATE_CONTINUE;
 }
@@ -372,6 +369,14 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		create = true;
 	}
 
+	if (bodyB == skate1sensor) {
+		skate1 = true;
+	}
+
+	if (bodyB == skate2sensor) {
+		skate2 = true;
+	}
+
 }
 void ModuleSceneIntro::Destroy(){
 	
@@ -380,3 +385,46 @@ void ModuleSceneIntro::Destroy(){
 		toDestroy = nullptr;
 	}
 }
+
+void ModuleSceneIntro::Create()
+{
+	/*
+	circles.add(App->physics->CreateCircle(304, 350, 6, b2_dynamicBody, 1.0f));
+	circles.getLast()->data->listener = this;
+	circles.getLast()->data->body->SetBullet(true);
+	*/
+
+	for (int i = 0; i < 9; i++) {
+		if (boxes[i] != nullptr) {
+			App->physics->world->DestroyBody(boxes[i]->body);
+		}
+	}
+
+	boxes[0] = App->physics->CreateRectangle(21, 111, 15, 15, b2_staticBody);
+	boxes[1] = App->physics->CreateRectangle(27, 127, 15, 15, b2_staticBody);
+	boxes[2] = App->physics->CreateRectangle(33, 142, 15, 15, b2_staticBody);
+	boxes[3] = App->physics->CreateRectangle(274, 224, 15, 15, b2_staticBody);
+	boxes[4] = App->physics->CreateRectangle(282, 250, 15, 15, b2_staticBody);
+	boxes[5] = App->physics->CreateRectangle(282, 278, 15, 15, b2_staticBody);
+	boxes[6] = App->physics->CreateRectangle(271, 297, 15, 15, b2_staticBody);
+	boxes[7] = App->physics->CreateRectangle(272, 511, 15, 15, b2_staticBody);
+	boxes[8] = App->physics->CreateRectangle(34, 511, 15, 15, b2_staticBody);
+	boxes[9] = App->physics->CreateRectangle(45, 285, 15, 15, b2_staticBody);
+	boxes[10] = App->physics->CreateRectangle(263, 345, 15, 15, b2_staticBody);
+	boxes[11] = App->physics->CreateRectangle(270, 195, 15, 15, b2_staticBody);
+	boxes[12] = App->physics->CreateRectangle(70, 105, 15, 15, b2_staticBody);
+
+
+	for (int i = 0; i < 13; i++) {
+		boxes[i]->body->SetType(b2_staticBody);
+		if (i >= 7) {
+			boxes[i]->body->GetFixtureList()->SetRestitution(1.5f);
+		}
+		else {
+			boxes[i]->body->GetFixtureList()->SetRestitution(0.2f);
+		}
+	}
+	create = false;
+
+}
+

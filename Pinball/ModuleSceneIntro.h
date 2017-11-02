@@ -18,6 +18,7 @@ public:
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 	void Destroy();
+	void Create();
 
 public:
 	p2List<PhysBody*> circles;
@@ -35,8 +36,10 @@ public:
 	SDL_Texture* box;
 	SDL_Texture* cones[4];
 	SDL_Texture* skate_texture;
+	SDL_Texture* skate_texture_2;
 
 	Animation skate;
+	Animation skate_2;
 
 	uint bonus_fx;
 
@@ -47,7 +50,10 @@ private:
 	float springDown = 1.4f;
 	bool create;
 	bool skate1 = false;
+	bool skate2 = false;
 	PhysBody* sensor;
+	PhysBody* skate1sensor;
+	PhysBody* skate2sensor;
 	bool sensed;
 };
 
