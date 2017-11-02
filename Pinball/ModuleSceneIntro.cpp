@@ -107,6 +107,7 @@ bool ModuleSceneIntro::Start()
 	bottombouncersfx = App->audio->LoadFx("pinball/soundeffects/bottombouncers.wav");
 	bonusfx = App->audio->LoadFx("pinball/soundeffects/bonus.wav");
 	boxesfx = App->audio->LoadFx("pinball/soundeffects/boxes.wav");
+	ballfx = App->audio->LoadFx("pinball/soundeffects/ballbouncing.wav");
 
 	
 
@@ -489,6 +490,10 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+
+	if (bodyA == circles.getLast()->data) {
+		App->audio->PlayFx(ballfx);
+	}
 	for (int i = 0; i < 13; i++)
 	{
 		if (bodyB == boxes[i]) 
