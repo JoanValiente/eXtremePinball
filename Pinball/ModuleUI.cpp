@@ -42,12 +42,12 @@ update_status ModuleUI::Update() {
 
 	char str[10];
 	sprintf_s(str, "%i", score);
-	App->fonts->BlitText(50, 10, font_score, str);
+	App->fonts->BlitText(35, 10, font_score, str);
 
 	char str2[10];
 	sprintf_s(str2, "%i", lifes);
 	if (lifes >= 0) {
-		App->fonts->BlitText(260, 10, font_score, str2);
+		App->fonts->BlitText(275, 10, font_score, str2);
 	}
 
 

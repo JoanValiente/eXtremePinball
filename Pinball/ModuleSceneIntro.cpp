@@ -509,35 +509,43 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyB == GreenSensors[0]) {
 		GreenSensor1 = true;
 		App->audio->PlayFx(sensorsfx);
+		App->ui->score += 5;
 	}
 	if (bodyB == GreenSensors[1]) {
 		GreenSensor2 = true;
 		App->audio->PlayFx(sensorsfx);
+		App->ui->score += 5;
 	}
 	if (bodyB == GreenSensors[2]) {
 		GreenSensor3 = true;
 		App->audio->PlayFx(sensorsfx);
+		App->ui->score += 5;
 	}
 	if (bodyB == GreenSensors[3]) {
 		GreenSensor4 = true;
-		App->audio->PlayFx(sensorsfx);
+		App->audio->PlayFx(sensorsfx); 
+		App->ui->score += 5;
 	}
 	//-----------------------------------------------------------
 	if (bodyB == RedSensors[0]) {
 		RedSensor1 = true;
 		App->audio->PlayFx(sensorsfx);
+		App->ui->score += 5;
 	}
 	if (bodyB == RedSensors[1]) {
 		RedSensor2 = true;
 		App->audio->PlayFx(sensorsfx);
+		App->ui->score += 5;
 	}
 	if (bodyB == RedSensors[2]) {
 		RedSensor3 = true;
 		App->audio->PlayFx(sensorsfx);
+		App->ui->score += 5;
 	}
 	if (bodyB == RedSensors[3]) {
 		RedSensor4 = true;
 		App->audio->PlayFx(sensorsfx);
+		App->ui->score += 5;
 	}
 	//-----------------------------------------------------------
 	if (bodyB == BouncerSensors[0]) {
