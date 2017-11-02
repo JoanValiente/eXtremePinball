@@ -24,7 +24,7 @@ public:
 
 private:
 	SDL_Texture* flipper;
-	SDL_Texture* flipper2;
+	SDL_Texture* flipper2; 
 	b2RevoluteJoint* LFlipperLeftFlipper;
 	b2RevoluteJoint* RFlipperRightFlipper;
 };

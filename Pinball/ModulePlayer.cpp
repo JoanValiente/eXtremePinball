@@ -30,6 +30,7 @@ bool ModulePlayer::Start()
 	
 	flipper = App->textures->Load("pinball/flipper.png");
 	flipper2 = App->textures->Load("pinball/flipper_2.png");
+	
 
 
 	for (int i = 0; i < 7; i++) {

@@ -101,6 +101,8 @@ bool ModuleSceneIntro::Start()
 	cones[1] = App->textures->Load("pinball/cone2.png");
 	cones[2] = App->textures->Load("pinball/cone3.png");
 	cones[3] = App->textures->Load("pinball/cone4.png");
+	bouncer = App->textures->Load("pinball/bouncer.png");
+	metal = App->textures->Load("pinball/metal.png");
 
 	
 
@@ -364,6 +366,11 @@ update_status ModuleSceneIntro::Update()
 			skate2 = false;
 		}
 	}
+
+	int x, y;
+	spring->GetPosition(x, y);
+	App->renderer->Blit(bouncer, x + 2, y, NULL);
+	App->renderer->Blit(metal, 290, 523, NULL);
 
 	//------------------------------------------------------------------------------
 	if (ShinyBouncer1 == true) {

@@ -39,6 +39,8 @@ public:
 	SDL_Texture* skate_texture;
 	SDL_Texture* skate_texture_2;
 	SDL_Texture* sensors_texture;
+	SDL_Texture* bouncer;
+	SDL_Texture* metal;
 
 	Animation skate;
 	Animation skate_2;
@@ -55,6 +57,7 @@ private:
 	PhysBody *spring;
 	PhysBody *springSurface;
 	PhysBody *limit;
+	
 	float springDown = 1.4f;
 	bool create;
 	bool skate1 = false;
