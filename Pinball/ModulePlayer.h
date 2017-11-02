@@ -4,6 +4,7 @@
 #include "p2Point.h"
 
 class b2RevoluteJoint;
+struct SDL_Texture;
 
 class ModulePlayer : public Module
 {
@@ -22,7 +23,8 @@ public:
 	PhysBody* RightFlipperjoint;
 
 private:
-
+	SDL_Texture* flipper;
+	SDL_Texture* flipper2; 
 	b2RevoluteJoint* LFlipperLeftFlipper;
 	b2RevoluteJoint* RFlipperRightFlipper;
 };
