@@ -90,7 +90,6 @@ bool ModuleSceneIntro::Start()
 
 	create = true;
 
-	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	map_texture = App->textures->Load("pinball/map.png");
 	ball = App->textures->Load("pinball/ball.png");
 	box = App->textures->Load("pinball/box.png");
@@ -101,6 +100,13 @@ bool ModuleSceneIntro::Start()
 	cones[1] = App->textures->Load("pinball/cone2.png");
 	cones[2] = App->textures->Load("pinball/cone3.png");
 	cones[3] = App->textures->Load("pinball/cone4.png");
+
+	bouncersfx = App->audio->LoadFx("pinball/soundeffects/bouncers.wav");
+	startfx = App->audio->LoadFx("pinball/soundeffects/start.wav");
+	sensorsfx = App->audio->LoadFx("pinball/soundeffects/sensors.wav");
+	bottombouncersfx = App->audio->LoadFx("pinball/soundeffects/bottombouncers.wav");
+	bonusfx = App->audio->LoadFx("pinball/soundeffects/bonus.wav");
+	boxesfx = App->audio->LoadFx("pinball/soundeffects/boxes.wav");
 
 	
 
@@ -205,9 +211,9 @@ bool ModuleSceneIntro::Start()
 	RedSensors[2] = App->physics->CreateRectangleSensor(167, 61, 11, 11);
 	RedSensors[3] = App->physics->CreateRectangleSensor(179, 90, 11, 11);
 
-	BouncerSensors[0] = App->physics->CreateCircleSensor(180, 145, 19);
-	BouncerSensors[1] = App->physics->CreateCircleSensor(135, 198, 19);
-	BouncerSensors[2] = App->physics->CreateCircleSensor(219, 200, 19);
+	BouncerSensors[0] = App->physics->CreateCircleSensor(180, 145, 22);
+	BouncerSensors[1] = App->physics->CreateCircleSensor(135, 198, 22);
+	BouncerSensors[2] = App->physics->CreateCircleSensor(219, 200, 22);
 
 	// -------------------------------------------Spring-------------------------------------------------------
 	
@@ -246,6 +252,8 @@ bool ModuleSceneIntro::Start()
 
 	bouncers[3] = App->physics->CreateChain(0, 0, bouncer_left, 6);
 	bouncers[4] = App->physics->CreateChain(115, 0, bouncer_right, 6);
+	bouncers[3]->body->SetBullet(true);
+	bouncers[4]->body->SetBullet(true);
 
 	for (int i = 0; i < 3; i++) {
 		for (int i = 0; i < 5; i++) {
@@ -273,6 +281,7 @@ bool ModuleSceneIntro::Start()
 		}
 	}
 
+	App->audio->PlayFx(startfx);
 	
 	return ret;
 }
@@ -451,24 +460,32 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 13; i++)
 	{
 		if (bodyB == boxes[i]) 
-		{
-			toDestroy = boxes[i];
-			boxes[i] = nullptr;
-			App->ui->score += 25;
+		{			
+			if( i>=9 ){
+				App->ui->score += 25;
+				App->audio->PlayFx(bouncersfx);
+			}
+
+			else if (i == 8 || i == 7) {
+				toDestroy = boxes[i];
+				boxes[i] = nullptr;
+				App->ui->score += 25;
+				App->audio->PlayFx(bottombouncersfx);
+			}
+
+			else {
+				toDestroy = boxes[i];
+				boxes[i] = nullptr;
+				App->ui->score += 25;
+				App->audio->PlayFx(boxesfx);
+			}
+
 		}
 	}
 
-	for (int i = 0; i < 3; i++)
-	{
-		if (bodyB == bouncers[i]) 
-		{
-			App->ui->score += 10;
-
-		}
-	}
 
 	if (bodyB == end) {
 		toDestroy = circles.getLast()->data;
@@ -479,49 +496,67 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if (bodyB == skate1sensor) {
 		skate1 = true;
+		App->audio->PlayFx(bonusfx);
 	}
 
 	if (bodyB == skate2sensor) {
 		skate2 = true;
+		App->audio->PlayFx(bonusfx);
 	}
 
 	//-----------------------------------------------------------
 
 	if (bodyB == GreenSensors[0]) {
 		GreenSensor1 = true;
+		App->audio->PlayFx(sensorsfx);
 	}
 	if (bodyB == GreenSensors[1]) {
 		GreenSensor2 = true;
+		App->audio->PlayFx(sensorsfx);
 	}
 	if (bodyB == GreenSensors[2]) {
 		GreenSensor3 = true;
+		App->audio->PlayFx(sensorsfx);
 	}
 	if (bodyB == GreenSensors[3]) {
 		GreenSensor4 = true;
+		App->audio->PlayFx(sensorsfx);
 	}
 	//-----------------------------------------------------------
 	if (bodyB == RedSensors[0]) {
 		RedSensor1 = true;
+		App->audio->PlayFx(sensorsfx);
 	}
 	if (bodyB == RedSensors[1]) {
 		RedSensor2 = true;
+		App->audio->PlayFx(sensorsfx);
 	}
 	if (bodyB == RedSensors[2]) {
 		RedSensor3 = true;
+		App->audio->PlayFx(sensorsfx);
 	}
 	if (bodyB == RedSensors[3]) {
 		RedSensor4 = true;
+		App->audio->PlayFx(sensorsfx);
 	}
 	//-----------------------------------------------------------
 	if (bodyB == BouncerSensors[0]) {
 		ShinyBouncer1 = true;
+		App->audio->PlayFx(bouncersfx);
+		App->ui->score += 10;
 	}
 	if (bodyB == BouncerSensors[1]) {
 		ShinyBouncer2 = true;
+		App->audio->PlayFx(bouncersfx);
+		App->ui->score += 10;
 	}
 	if (bodyB == BouncerSensors[2]) {
 		ShinyBouncer3 = true;
+		App->audio->PlayFx(bouncersfx);
+		App->ui->score += 10;
 	}
+
+	
 	
 }
 void ModuleSceneIntro::Destroy(){

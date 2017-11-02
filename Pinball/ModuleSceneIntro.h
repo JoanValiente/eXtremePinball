@@ -49,7 +49,12 @@ public:
 	Animation redsensor;
 	Animation shiny_bouncer;
 
-	uint bonus_fx;
+	uint bonusfx;
+	uint bottombouncersfx;
+	uint bouncersfx;
+	uint boxesfx;
+	uint sensorsfx;
+	uint startfx;
 
 private:
 	PhysBody *spring;
