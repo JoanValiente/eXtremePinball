@@ -1,7 +1,9 @@
 #include "Module.h"
 #include "Globals.h"
+#include "Animation.h"
 
 
+struct SDL_Texture;
 
 class ModuleUI : public Module
 {
@@ -16,7 +18,14 @@ public:
 	update_status Update();
 
 	int score;
+	int scoreaux;
 	int lifes;
+
+	SDL_Texture* menu;
+
+	Animation play;
+	Animation high_score;
+
 
 private:
 	int font_score;

@@ -44,8 +44,8 @@ Application::Application()
 
 	// Player
 
-	AddModule(ui);
 	AddModule(player);
+	AddModule(ui);
 
 }
 

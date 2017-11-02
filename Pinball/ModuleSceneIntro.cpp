@@ -72,7 +72,10 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 
 	shiny_bouncer.PushBack({ 0,29,36,36 });
 	shiny_bouncer.speed = 0.2f;
+
+
 	sensed = false;
+
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -88,7 +91,7 @@ bool ModuleSceneIntro::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	create = true;
+	create = false;
 
 	map_texture = App->textures->Load("pinball/map.png");
 	ball = App->textures->Load("pinball/ball.png");
@@ -100,7 +103,9 @@ bool ModuleSceneIntro::Start()
 	cones[1] = App->textures->Load("pinball/cone2.png");
 	cones[2] = App->textures->Load("pinball/cone3.png");
 	cones[3] = App->textures->Load("pinball/cone4.png");
-
+	bouncer = App->textures->Load("pinball/bouncer.png");
+	metal = App->textures->Load("pinball/metal.png");
+	
 	bouncersfx = App->audio->LoadFx("pinball/soundeffects/bouncers.wav");
 	startfx = App->audio->LoadFx("pinball/soundeffects/start.wav");
 	sensorsfx = App->audio->LoadFx("pinball/soundeffects/sensors.wav");
@@ -298,11 +303,12 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && circles.count() == 0)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && App->ui->lifes == 0)
 	{
-		circles.add(App->physics->CreateCircle(304, 350, 6, b2_dynamicBody, 1.0f));
-		circles.getLast()->data->listener = this;
-		circles.getLast()->data->body->SetBullet(true);
+		create = true;
+		App->ui->lifes = 5;
+		App->ui->score = 0;
+
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN && circles.count() == 0){
@@ -311,7 +317,7 @@ update_status ModuleSceneIntro::Update()
 			circles.getLast()->data->body->SetBullet(true);
 	}
 
-	if (create == true && App->ui->lifes >= 0) 
+	if (create == true && App->ui->lifes > 0) 
 	{
 		Create();
 	}
@@ -328,16 +334,6 @@ update_status ModuleSceneIntro::Update()
 	
 	App->renderer->Blit(map_texture, 0, 0, NULL, 1.0f);
 		
-
-	p2List_item<PhysBody*>* c = circles.getFirst();
-
-	while (c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(ball, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
 
 	for (int i = 0; i < 7; i++) {
 		int x, y;
@@ -370,6 +366,13 @@ update_status ModuleSceneIntro::Update()
 			skate2 = false;
 		}
 	}
+
+	int x, y;
+	spring->GetPosition(x, y);
+
+	App->renderer->Blit(bouncer, x +1 , y,NULL);
+	App->renderer->Blit(metal, 290, 522, NULL);
+
 
 	//------------------------------------------------------------------------------
 	if (ShinyBouncer1 == true) {
@@ -455,6 +458,19 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 	//------------------------------------------------------------------------------
+
+
+	p2List_item<PhysBody*>* c = circles.getFirst();
+
+	while (c != NULL)
+	{
+		int x, y;
+		c->data->GetPosition(x, y);
+		App->renderer->Blit(ball, x, y, NULL, 1.0f, c->data->GetRotation());
+		c = c->next;
+	}
+
+
 	return UPDATE_CONTINUE;
 }
 
@@ -577,11 +593,11 @@ void ModuleSceneIntro::Destroy(){
 
 void ModuleSceneIntro::Create()
 {
-	/*
+	
 	circles.add(App->physics->CreateCircle(304, 350, 6, b2_dynamicBody, 1.0f));
 	circles.getLast()->data->listener = this;
 	circles.getLast()->data->body->SetBullet(true);
-	*/
+	
 
 	for (int i = 0; i < 9; i++) {
 		if (boxes[i] != nullptr) {

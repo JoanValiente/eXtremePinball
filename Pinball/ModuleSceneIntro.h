@@ -5,7 +5,7 @@
 #include "Animation.h"
 
 class PhysBody;
-struct SDL_Texture;
+
 
 class ModuleSceneIntro : public Module
 {
