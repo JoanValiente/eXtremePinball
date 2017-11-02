@@ -133,6 +133,8 @@ bool ModulePlayer::Start()
 bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
+	App->textures->Unload(flipper);
+	App->textures->Unload(flipper2);
 
 	return true;
 }

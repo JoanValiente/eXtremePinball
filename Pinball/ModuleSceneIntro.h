@@ -56,6 +56,7 @@ public:
 	uint bouncersfx;
 	uint boxesfx;
 	uint sensorsfx;
+	uint ballfx;
 	uint startfx;
 
 private:
