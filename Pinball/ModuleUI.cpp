@@ -46,7 +46,9 @@ update_status ModuleUI::Update() {
 
 	char str2[10];
 	sprintf_s(str2, "%i", lifes);
-	App->fonts->BlitText(260, 10, font_score, str2);
+	if (lifes >= 0) {
+		App->fonts->BlitText(260, 10, font_score, str2);
+	}
 
 
 

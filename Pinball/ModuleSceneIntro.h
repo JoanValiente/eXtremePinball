@@ -25,6 +25,8 @@ public:
 	PhysBody* bouncers[5];
 	PhysBody* walls[5];
 	PhysBody* end;
+	PhysBody* GreenSensors[4];
+	PhysBody* RedSensors[4];
 	PhysBody* toDestroy;
 
 	SDL_Texture* map_texture;

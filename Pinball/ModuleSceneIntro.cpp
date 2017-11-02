@@ -128,7 +128,18 @@ bool ModuleSceneIntro::Start()
 		218, 510,
 		258, 486
 	};
-	
+
+	//-------------------------------------------Sensors-------------------------------------------------------
+
+	GreenSensors[0] = App->physics->CreateRectangleSensor(158, 27, 15, 16);
+	GreenSensors[1] = App->physics->CreateRectangleSensor(132, 35, 12, 12);
+	GreenSensors[2] = App->physics->CreateRectangleSensor(111, 45, 10, 10);
+	GreenSensors[3] = App->physics->CreateRectangleSensor(96, 60, 7, 7);
+
+	RedSensors[0] = App->physics->CreateRectangleSensor(131, 61, 11, 11);
+	RedSensors[1] = App->physics->CreateRectangleSensor(145, 90, 11, 11);
+	RedSensors[2] = App->physics->CreateRectangleSensor(167, 61, 11, 11);
+	RedSensors[3] = App->physics->CreateRectangleSensor(179, 90, 11, 11);
 
 	// -------------------------------------------Spring-------------------------------------------------------
 	
@@ -324,8 +335,8 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->ui->lifes--;
 		create = true;
 	}
-}
 
+}
 void ModuleSceneIntro::Destroy(){
 	
 	if (toDestroy != nullptr) {
