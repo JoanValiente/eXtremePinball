@@ -3,7 +3,7 @@ image: Visual Studio 2017
 build:
   verbosity: minimal
 after_build:
-- 7z a PinballFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Pinball\Debug\Spike_FlanStudio.exe"
+- 7z a PinballFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Pinball\Debug\2D Physics - class 4.exe"
 - 7z a PinballFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Pinball\Game\pinball"
 - 7z a PinballFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Pinball\Game\*.dll"
 artifacts:
