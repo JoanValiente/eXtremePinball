@@ -2,3 +2,7 @@ version: 1.0.{build}
 image: Visual Studio 2017
 build:
   verbosity: minimal
+after_build:
+- 7z a PinballFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Pinball\Debug\Spike_FlanStudio.exe"
+- 7z a PinballFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Pinball\Game\pinball"
+- 7z a PinballFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Pinball\Game\*.dll"
